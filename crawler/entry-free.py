@@ -75,10 +75,12 @@ def string_to_csv():
 # 크롤러 실행하기
 
 def main():
-    for i in range(1, 100):
+    for i in range(1, 250):
         driver.get("https://playentry.org/ds#!/free?sort=created&rows=1000&page=" + str(i))
-        time.sleep(5)
+        time.sleep(10)
         article_scrapper()
+        print("page " + str(i) + " done.")
+        driver.implicitly_wait(10)
 
     string_to_csv()
     driver.quit()

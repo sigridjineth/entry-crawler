@@ -30,7 +30,7 @@ def article_titleparser(title):
 
 
 def article_authorparser(project):
-	tables_projectbox_author = project.find_element_by_tag_name("a")
+	tables_projectbox_author = project.find_element_by_class_name("projectInfoNameHigh")
 	author_list.append(tables_projectbox_author.text)
 
 
@@ -47,7 +47,7 @@ def article_likeparser(project):
 
 def article_commentparser(project):
 	tables_projectbox_comment = project.find_element_by_class_name("projectInfoComments")
-	view_list.append(tables_projectbox_comment.text)
+	comment_list.append(tables_projectbox_comment.text)
 
 
 # 협업과 관련된 키워드만 뽑아보기
@@ -71,11 +71,15 @@ def string_to_csv():
 
 
 def main():
-	for i in range(1, 2):
+	for i in range(1, 500):
 		driver.get("about:blank")
 		driver.get("https://playentry.org/all#!/?sort=updated&rows=12&page="+str(i))
 		time.sleep(10)
 		article_scrapper()
+		print("page " + str(i) + " done.")
+		print("title:" + str(title_list) + "author: " + str(author_list) + "comment: " + str(comment_list)
+			  + "view: " + str(view_list) + "like: " + str(like_list))
+		driver.implicitly_wait(10)
 
 	string_to_csv()
 	driver.quit()
